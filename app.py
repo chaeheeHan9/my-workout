@@ -1,8 +1,3 @@
-!pip install -q streamlit
-!npm install -q -g localtunnel
-
-#------------------------------------
-%%writefile app.py
 import streamlit as st
 
 st.set_page_config(page_title="운동 플래너", layout="wide")
