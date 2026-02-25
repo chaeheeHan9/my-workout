@@ -75,7 +75,7 @@ for i, col in enumerate(cols):
         else:
             st.write("---")
 
-#------------------------------------
-import urllib
-print("Password/Enpoint IP for localtunnel is:", urllib.request.urlopen('https://ipv4.icanhazip.com').read().decode('utf8').strip())
-
+# --- 하단 컨트롤 버튼 ---
+st.sidebar.markdown("---")
+if st.sidebar.button("🗑️ 전체 리셋", on_click=reset_plan):
+    st.sidebar.warning("모든 계획이 초기화되었습니다.")
