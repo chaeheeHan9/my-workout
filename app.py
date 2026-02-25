@@ -53,7 +53,7 @@ for i, col in enumerate(cols):
     with col:
         target_part = schedule[day_name]
         st.markdown(f"### {day_name}")
-        color = "#CF3275" if target_part == "Lower Body" else "#A1D42A" if target_part == "Upper Body" else "#A0F2FA" if target_part == "Abs" else "#A3A3A3"
+        color = "#CF3275" if target_part == "Lower Body" else "#32CF3C" if target_part == "Upper Body" else "#32C5CF" if target_part == "Abs" else "#545454"
         st.markdown(f"<p style='color:{color}; font-weight:bold;'>[{target_part}]</p>", unsafe_allow_html=True)
 
         if selected_plan[day_name]:
