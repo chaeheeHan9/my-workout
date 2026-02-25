@@ -33,7 +33,7 @@ selected_plan = {}
 
 for day, target in schedule.items():
     if target == "휴식":
-        selected_plan[day] = ["휴식"]
+        selected_plan[day] = [""]
     elif target == "상체":
         st.sidebar.subheader(f"{day}")
         shoulder = st.sidebar.multiselect(f"어깨", exercise_data["상체"]["어깨"], key=f"{day}_sh")
