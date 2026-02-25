@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="운동 플래너", layout="wide")
+st.set_page_config(page_title="🏋️ Planner", layout="wide")
 
 # 스타일 설정
 st.markdown("""
@@ -10,35 +10,35 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("운동 스케쥴")
+st.title("Schedule")
 
 # --- 운동 데이터 설정 ---
 exercise_data = {
-    "하체": ["BSS", "RDL", "Single RDL", "Hip thrust", "Goblet Squat", "Leg extension", "Reverse lunge", "Sumo Squat", "Smith machine", "Cable kick back", "Step up"],
-    "상체": {
-        "어깨": ["Lateral raises", "Front raises", "Upright rows", "Military press"],
-        "등": ["Wide grip lat pull down", "Seated row", "Seated face pull", "Cable seated one arm pull", "Bent over barbell row", "Lat pull down", "Pull over"],
-        "팔": ["Cable one arm biceps curl", "Dumbbell hammer curl"]
+    "Lower Body": ["BSS", "RDL", "Single RDL", "Hip thrust", "Goblet Squat", "Leg extension", "Reverse lunge", "Sumo Squat", "Smith machine", "Cable kick back", "Step up"],
+    "Upper Body": {
+        "Shoulders": ["Lateral raises", "Front raises", "Upright rows", "Military press"],
+        "Back": ["Wide grip lat pull down", "Seated row", "Seated face pull", "Cable seated one arm pull", "Bent over barbell row", "Lat pull down", "Pull over"],
+        "Arms": ["Cable one arm biceps curl", "Dumbbell hammer curl"]
     },
-    "복근": ["A", "B", "C", "D", "E"]
+    "Abs": ["A", "B", "C", "D", "E"]
 }
 
 schedule = {
-    "Mon": "하체", "Tue": "휴식", "Wed": "상체", "Thu": "복근", "Fri": "하체", "Sat": "상체", "Sun": "휴식"
+    "Mon": "Lower Body", "Tue": "Break", "Wed": "Upper Body", "Thu": "Abs", "Fri": "Lower Body", "Sat": "Upper Body", "Sun": "Break"
 }
 
 # --- 사이드바: 운동 선택 ---
-st.sidebar.header("운동 선택")
+st.sidebar.header("Choose your exercise")
 selected_plan = {}
 
 for day, target in schedule.items():
-    if target == "휴식":
+    if target == "Break":
         selected_plan[day] = []
-    elif target == "상체":
+    elif target == "Upper Body":
         st.sidebar.subheader(f"{day}")
-        shoulder = st.sidebar.multiselect(f"어깨", exercise_data["상체"]["어깨"], key=f"{day}_sh")
-        back = st.sidebar.multiselect(f"등", exercise_data["상체"]["등"], key=f"{day}_bk")
-        arms = st.sidebar.multiselect(f"팔", exercise_data["상체"]["팔"], key=f"{day}_ar")
+        shoulder = st.sidebar.multiselect(f"Shoulders", exercise_data["Upper Body"]["Shoulders"], key=f"{day}_sh")
+        back = st.sidebar.multiselect(f"Back", exercise_data["Upper Body"]["Back"], key=f"{day}_bk")
+        arms = st.sidebar.multiselect(f"Arms", exercise_data["Upper Body"]["Arms"], key=f"{day}_ar")
         selected_plan[day] = shoulder + back + arms
     else:
         st.sidebar.subheader(f"{day}")
@@ -53,7 +53,7 @@ for i, col in enumerate(cols):
     with col:
         target_part = schedule[day_name]
         st.markdown(f"### {day_name}")
-        color = "#E74C3C" if target_part == "하체" else "#3498DB" if target_part == "상체" else "#27AE60" if target_part == "복근" else "#95A5A6"
+        color = "#CF3275" if target_part == "Lower Body" else "#A1D42A" if target_part == "Upper Body" else "#A0F2FA" if target_part == "Abs" else "#A3A3A3"
         st.markdown(f"<p style='color:{color}; font-weight:bold;'>[{target_part}]</p>", unsafe_allow_html=True)
 
         if selected_plan[day_name]:
