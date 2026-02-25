@@ -2,6 +2,19 @@ import streamlit as st
 
 st.set_page_config(page_title="🏋️ Planner", layout="wide")
 
+# --- 세션 상태 초기화 (데이터 저장 공간 만들기) ---
+if 'workout_plan' not in st.session_state:
+    st.session_state['workout_plan'] = {}
+if 'day_targets' not in st.session_state:
+    st.session_state['day_targets'] = {day: None for day in ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]}
+
+# --- 리셋 함수 ---
+def reset_plan():
+    st.session_state['workout_plan'] = {}
+    st.session_state['day_targets'] = {day: None for day in ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]}
+    # 모든 위젯의 값을 초기화하기 위해 쿼리 파라미터나 상태 재설정 가능
+    st.rerun()
+
 # 스타일 설정
 st.markdown("""
     <style>
