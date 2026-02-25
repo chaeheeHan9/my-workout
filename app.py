@@ -66,4 +66,3 @@ for i, col in enumerate(cols):
 import urllib
 print("Password/Enpoint IP for localtunnel is:", urllib.request.urlopen('https://ipv4.icanhazip.com').read().decode('utf8').strip())
 
-!streamlit run app.py & npx localtunnel --port 8501
