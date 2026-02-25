@@ -75,7 +75,7 @@ for i, col in enumerate(cols):
             for ex in selected_plan[day_name]:
                 st.write(f"• {ex}")
         else:
-            st.write("---")
+            st.write("")
 
 # --- 하단 컨트롤 버튼 ---
 st.sidebar.markdown("---")
