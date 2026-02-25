@@ -42,7 +42,7 @@ for day, target in schedule.items():
         selected_plan[day] = shoulder + back + arms
     else:
         st.sidebar.subheader(f"{day}")
-        selected_plan[day] = st.sidebar.multiselect(f(target), exercise_data[target], key=day)
+        selected_plan[day] = st.sidebar.multiselect(f"target", exercise_data[target], key=day)
 
 # --- 메인 화면: 7일 캘린더 ---
 cols = st.columns(7)
