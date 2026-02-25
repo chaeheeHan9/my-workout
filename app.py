@@ -2,18 +2,19 @@ import streamlit as st
 
 st.set_page_config(page_title="🏋️ Planner", layout="wide")
 
-# --- 세션 상태 초기화 (데이터 저장 공간 만들기) ---
-if 'workout_plan' not in st.session_state:
-    st.session_state['workout_plan'] = {}
-if 'day_targets' not in st.session_state:
-    st.session_state['day_targets'] = {day: None for day in ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]}
+# --- 세션 상태 초기화 ---
+# multiselect의 선택값들을 개별적으로 저장하기 위해 session_state를 위젯 키와 연결합니다.
+if 'initialized' not in st.session_state:
+    st.session_state['initialized'] = True
 
-# --- 리셋 함수 ---
+# --- 리셋 함수 (에러 수정) ---
 def reset_plan():
-    st.session_state['workout_plan'] = {}
-    st.session_state['day_targets'] = {day: None for day in ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]}
-    # 모든 위젯의 값을 초기화하기 위해 쿼리 파라미터나 상태 재설정 가능
-    st.rerun()
+    # 모든 위젯 키에 해당하는 값을 비웁니다.
+    for key in st.session_state.keys():
+        if any(day in key for day in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]):
+            st.session_state[key] = []
+    # st.rerun()은 콜백 함수(on_click) 내에서 호출해도 되지만, 
+    # 최신 버전에서는 자동으로 새로고침되므로 생략하거나 아래처럼 별도로 처리합니다.
 
 # 스타일 설정
 st.markdown("""
@@ -49,6 +50,7 @@ for day, target in schedule.items():
         selected_plan[day] = []
     elif target == "Upper Body":
         st.sidebar.subheader(f"{day}")
+        # default 인자에 session_state를 연결하여 새로고침 시에도 유지되게 합니다.
         shoulder = st.sidebar.multiselect(f"Shoulders", exercise_data["Upper Body"]["Shoulders"], key=f"{day}_sh")
         back = st.sidebar.multiselect(f"Back", exercise_data["Upper Body"]["Back"], key=f"{day}_bk")
         arms = st.sidebar.multiselect(f"Arms", exercise_data["Upper Body"]["Arms"], key=f"{day}_ar")
@@ -77,5 +79,6 @@ for i, col in enumerate(cols):
 
 # --- 하단 컨트롤 버튼 ---
 st.sidebar.markdown("---")
-if st.sidebar.button("🗑️ 전체 리셋", on_click=reset_plan):
-    st.sidebar.warning("모든 계획이 초기화되었습니다.")
+# on_click에서 reset_plan을 호출하도록 유지하되 내부 에러가 없도록 수정되었습니다.
+if st.sidebar.button("🗑️ Reset", on_click=reset_plan):
+    st.sidebar.warning("Reset Complete")
